@@ -1,0 +1,19 @@
+{
+    "name": "asif/laravel-moduler",
+    "description": "This package is used to generate modules for laravel app",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "rahmanasif05004",
+            "email": "rahmanasif05004@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Asif\\LaravelModuler\\":"src"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {}
+}
