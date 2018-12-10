@@ -8,11 +8,12 @@ trait FolderGenerateAble
     private $moduleFolders=[
         'Controllers',
         'Models',
-        'Database'=>['Migrations','Factories','Seeds'],
+        'Database',
         'Requests',
         'Views',
         'Routes'
     ];
+    private $databaseSubFolders=['Migrations','Factories','Seeds'];
     public function generateModule($moduleName)
     {
         $this->moduleName=app_path('Modules/'.ucfirst($moduleName));
@@ -20,6 +21,7 @@ trait FolderGenerateAble
         {
             File::makeDirectory($this->moduleName,$mode=0777,true,true);
             $this->generateModuleFolders($this->moduleName);
+            $this->generateModuleSubFolders($this->moduleName,'Database',$this->databaseSubFolders);
         }
     }
 
@@ -27,11 +29,23 @@ trait FolderGenerateAble
     {
         foreach($this->moduleFolders as $moduleFolder)
         {
-            $folder=$moduleName.'/'.$moduleFolder;
-            if(!file_exists($folder))
-            {
-                File::makeDirectory($folder,$mode=0777,true,true);
-            }
+                $folder=$moduleName.'/'.$moduleFolder;
+                if(!file_exists($folder))
+                {
+                    File::makeDirectory($folder,$mode=0777,true,true);
+                }   
+        }
+    }
+
+    private function generateModuleSubFolders($moduleName,$folderName,$subFolders)
+    {
+        foreach($subFolders as $subFolder)
+        {
+                $folder=$moduleName.'/'.$folderName.'/'.$subFolder;
+                if(!file_exists($folder))
+                {
+                    File::makeDirectory($folder,$mode=0777,true,true);
+                }   
         }
     }
 }
