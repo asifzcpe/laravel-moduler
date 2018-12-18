@@ -12,6 +12,7 @@ class MakeModuleCommand extends Command
 
     public function handle()
     {
+        $this->info(base_path());die();
         if($this->getModuleType()==='WEB')
         {
             $this->generateModule($this->argument('moduleName'));
