@@ -7,7 +7,7 @@ use File;
 class MakeModuleCommand extends Command
 {
     use FolderGenerateAble;
-    use StubGenerateAble;
+    
     protected $signature='make:module {moduleName}';
 
     protected $description="This command is used to generate module";
@@ -18,10 +18,6 @@ class MakeModuleCommand extends Command
         if($this->getModuleType()==='WEB')
         {
             $this->generateModule($moduleName);
-            $this->generateController($moduleName);
-            $this->generateRequest($moduleName);
-            $this->generateModel($moduleName);
-            $this->generateRoute($moduleName);
         }
         else if($this->getModuleType()=='API')
         {

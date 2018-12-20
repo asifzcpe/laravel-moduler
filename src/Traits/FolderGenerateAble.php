@@ -4,6 +4,7 @@ use File;
 
 trait FolderGenerateAble
 {
+    use StubGenerateAble;
     private $moduleName;
     private $moduleFolders=[
         'Controllers',
@@ -22,6 +23,10 @@ trait FolderGenerateAble
             File::makeDirectory($this->moduleName,$mode=0777,true,true);
             $this->generateModuleFolders($this->moduleName);
             $this->generateModuleSubFolders($this->moduleName,'Database',$this->databaseSubFolders);
+            $this->generateController($moduleName);
+            $this->generateRequest($moduleName);
+            $this->generateModel($moduleName);
+            $this->generateRoute($moduleName);
         }
     }
 
