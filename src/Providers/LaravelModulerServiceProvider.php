@@ -13,6 +13,7 @@ class LaravelModulerServiceProvider extends ServiceProvider
     public function register()
     {
         $this->makeModulesFolderIfNotExists();
+        $this->generateModulerServiceProviderIfNotExists();
     }
 
     private function laravelModulerCommands()
@@ -35,6 +36,16 @@ class LaravelModulerServiceProvider extends ServiceProvider
         if(!file_exists($path))
         {
             File::makeDirectory($path,$mode=0777,true,true);    
+        }
+    }
+
+    private function generateModulerServiceProviderIfNotExists()
+    {
+        $path=app_path('Providers/ModuleServiceProvider.php');
+        if(!file_exists($path))
+        {
+            File::makeDirectory($path,$mode=0777,true,true);
+            file_put_contents($path,file_get_contents(base_path('vendor/asif/laravel-moduler/src/Providers/ModuleServiceProvider.php')));  
         }
     }
 }
