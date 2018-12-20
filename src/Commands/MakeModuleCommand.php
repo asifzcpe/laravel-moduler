@@ -2,20 +2,26 @@
 namespace Asif\LaravelModuler\Commands;
 use Illuminate\Console\Command;
 use Asif\LaravelModuler\Traits\FolderGenerateAble;
+use Asif\LaravelModuler\Traits\StubGenerateAble;
 use File;
 class MakeModuleCommand extends Command
 {
     use FolderGenerateAble;
+    use StubGenerateAble;
     protected $signature='make:module {moduleName}';
 
     protected $description="This command is used to generate module";
 
     public function handle()
     {
-        $this->info(base_path());die();
+        $moduleName=$this->argument('moduleName');
         if($this->getModuleType()==='WEB')
         {
-            $this->generateModule($this->argument('moduleName'));
+            $this->generateModule($moduleName);
+            $this->generateController($moduleName);
+            $this->generateRequest($moduleName);
+            $this->generateModel($moduleName);
+            $this->generateRoute($moduleName);
         }
         else if($this->getModuleType()=='API')
         {
@@ -33,6 +39,5 @@ class MakeModuleCommand extends Command
         $moduleType=$this->choice('Select Your Module Type',['WEB','API']);
         return $moduleType;
     }
-
     
 }
