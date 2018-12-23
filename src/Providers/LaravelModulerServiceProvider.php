@@ -44,8 +44,7 @@ class LaravelModulerServiceProvider extends ServiceProvider
         $path=app_path('Providers/ModuleServiceProvider.php');
         if(!file_exists($path))
         {
-            File::makeDirectory($path,$mode=0777,true,true);
-            file_put_contents($path,file_get_contents(base_path('vendor/asif/laravel-moduler/src/Providers/ModuleServiceProvider.php')));  
+            file_put_contents($path,file_get_contents(base_path('vendor/asif/laravel-moduler/src/Stubs/ModuleServiceProvider.stub')));  
         }
     }
 }

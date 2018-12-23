@@ -1,7 +1,6 @@
 <?php
 
-// namespace App\Providers;
-namespace Asif\LaravelModuler\Providers;
+namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +14,7 @@ class ModuleServiceProvider extends ServiceProvider
     public function boot()
     {
         
-        $moduleFolders=scandir("app/Modules");
+        $moduleFolders=scandir(app_path("Modules"));
         $modules=array_diff($moduleFolders,['.','..']);
         foreach($modules as $module)
         {
@@ -46,8 +45,9 @@ class ModuleServiceProvider extends ServiceProvider
 
     private function loadModulesRoutes($module)
     {
-        $this->routesWebPath=__DIR__.'/'.$module.'/routes/'.'web.php';
-        $this->routesApiPath=__DIR__.'/'.$module.'/routes/'.'api.php';
+        $this->routesWebPath=app_path('Modules/'.$module.'/Routes/'.'web.php');
+        
+        $this->routesApiPath=app_path('Modules/'.$module.'/Routes/'.'api.php');
         if(file_exists($this->routesWebPath))
         {
             include $this->routesWebPath;
@@ -66,6 +66,4 @@ class ModuleServiceProvider extends ServiceProvider
             $this->loadMigrationsFrom($this->migrationsPath);
         }
     }
-
-
 }
