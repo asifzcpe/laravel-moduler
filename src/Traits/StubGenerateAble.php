@@ -73,4 +73,20 @@ trait StubGenerateAble
 		file_put_contents(app_path('Modules/'.$moduleFolder.'/Routes/'.'web.php'),$routeTemplate);
 	}
 
+	public function generateMigrationFiles($moduleFolder)
+	{
+		$dummyClass=Str::studly('CreateTable'.Str::plural(($moduleFolder)));
+		$tableName=strtolower(Str::plural($moduleFolder));
+		$migrationFileName=date('Y_m_d_His').'_create_table_'.$tableName;
+		$migrationTemplate=str_replace([
+			'DummyClass',
+			'DummyTable'
+		],
+		[
+			$dummyClass,
+			$tableName
+		],$this->getStub(null,'Migration'));
+
+		file_put_contents(app_path('Modules/'.$moduleFolder.'/Database/Migrations/'.$migrationFileName.'.php'),$migrationTemplate);
+	}
 }

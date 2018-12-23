@@ -3,8 +3,8 @@
 namespace App\Modules\{ModulerFolder}\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Modules\{ModulerFolder}\Requests\{ModulerFolder}Request;
-use App\Http\Modules\{ModulerFolder}\Models\{ModelName};
+use App\Modules\{ModulerFolder}\Requests\{ModulerFolder}Request;
+use App\Modules\{ModulerFolder}\Models\{ModelName};
 use App\Http\Controllers\Controller;
 class {ControllerName} extends Controller
 {

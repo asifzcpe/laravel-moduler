@@ -27,6 +27,7 @@ trait FolderGenerateAble
             $this->generateRequest($moduleName);
             $this->generateModel($moduleName);
             $this->generateRoute($moduleName);
+            $this->generateMigrationFiles($moduleName);
         }
     }
 

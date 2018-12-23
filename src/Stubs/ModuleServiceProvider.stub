@@ -60,7 +60,7 @@ class ModuleServiceProvider extends ServiceProvider
 
     private function loadModulesMigrations($module)
     {
-        $this->migrationsPath=__DIR__.'/'.$module.'/'.'Migrations';
+        $this->migrationsPath=app_path('Modules/'.$module.'/'.'Database/Migrations');
         if(file_exists($this->migrationsPath))
         {
             $this->loadMigrationsFrom($this->migrationsPath);
