@@ -36,7 +36,7 @@ class ModuleServiceProvider extends ServiceProvider
 
     private function loadModulesViews($module)
     {
-        $this->viewsPath=__DIR__.'/'.$module.'/'.'Views';
+        $this->viewsPath=app_path('Modules/'.$module.'/'.'Views');
         if(file_exists($this->viewsPath))
         {
             $this->loadViewsFrom($this->viewsPath,$module);

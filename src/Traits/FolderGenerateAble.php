@@ -28,6 +28,11 @@ trait FolderGenerateAble
             $this->generateModel($moduleName);
             $this->generateRoute($moduleName);
             $this->generateMigrationFiles($moduleName);
+            $this->generateViewFiles($moduleName);
+        }
+        else
+        {
+            $this->error($moduleName." module has already been created. Please, try other");
         }
     }
 

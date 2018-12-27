@@ -89,4 +89,13 @@ trait StubGenerateAble
 
 		file_put_contents(app_path('Modules/'.$moduleFolder.'/Database/Migrations/'.$migrationFileName.'.php'),$migrationTemplate);
 	}
+
+	public function generateViewFiles($moduleFolder)
+	{
+		$viewFiles=['index','create','show','edit'];
+		foreach($viewFiles as $vf)
+		{
+			file_put_contents(app_path('Modules/'.$moduleFolder.'/Views/'.$vf.'.blade.php'),'');
+		}
+	}
 }
