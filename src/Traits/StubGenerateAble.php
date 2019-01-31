@@ -66,7 +66,7 @@ trait StubGenerateAble
 		[
 			$moduleFolder,
 			Str::plural(strtolower($moduleFolder)),
-			Str::singular(ucfirst($moduleFolder)),
+			ucfirst($moduleFolder),
 			'[]'
 		],$this->getStub('Routes','Route'));
 
