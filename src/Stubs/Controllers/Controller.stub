@@ -15,7 +15,8 @@ class {ControllerName} extends Controller
      */
     public function index()
     {
-        //
+        $data['{ModelName}']={ModelName}::all();
+        return view('{ModelName}::index',$data);
     }
 
     /**
@@ -25,7 +26,8 @@ class {ControllerName} extends Controller
      */
     public function create()
     {
-        //
+        $data=[];
+        return view('{ModelName}::create',$data);
     }
 
     /**
@@ -34,9 +36,9 @@ class {ControllerName} extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store({ModulerFolder}Request $request)
     {
-        //
+        
     }
 
     /**
@@ -47,7 +49,8 @@ class {ControllerName} extends Controller
      */
     public function show($id)
     {
-        //
+        $data['{ModelName}']={ModelName}::find($id);
+        return view('{ModelName}::show',$data);
     }
 
     /**
@@ -58,7 +61,8 @@ class {ControllerName} extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['{ModelName}']={ModelName}::find($id);
+        return view('{ModelName}::edit',$data);
     }
 
     /**
@@ -68,9 +72,9 @@ class {ControllerName} extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update({ModulerFolder}Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -81,6 +85,7 @@ class {ControllerName} extends Controller
      */
     public function destroy($id)
     {
-        //
+        ${ModelName}={ModelName}::find($id);
+        ${ModelName}->delete();
     }
 }

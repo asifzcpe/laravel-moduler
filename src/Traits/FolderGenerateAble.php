@@ -15,7 +15,7 @@ trait FolderGenerateAble
         'Routes'
     ];
     private $databaseSubFolders=['Migrations','Factories','Seeds'];
-    public function generateModule($moduleName)
+    public function generateModule($moduleName,$authOption=false)
     {
         $this->moduleName=app_path('Modules/'.ucfirst($moduleName));
         if(!file_exists($this->moduleName))
@@ -26,7 +26,7 @@ trait FolderGenerateAble
             $this->generateController($moduleName);
             $this->generateRequest($moduleName);
             $this->generateModel($moduleName);
-            $this->generateRoute($moduleName);
+            $this->generateRoute($moduleName,$authOption);
             $this->generateMigrationFiles($moduleName);
             $this->generateViewFiles($moduleName);
         }

@@ -55,7 +55,7 @@ trait StubGenerateAble
 		file_put_contents(app_path('Modules/'.$moduleFolder.'/Models/'.Str::singular($moduleFolder).'.php'),$modelTemplate);
 	}
 
-	public function generateRoute($moduleFolder)
+	public function generateRoute($moduleFolder,$authOption=false)
 	{
 		$routeTemplate=str_replace([
 			'{ModulerFolder}',
@@ -67,7 +67,7 @@ trait StubGenerateAble
 			$moduleFolder,
 			Str::plural(strtolower($moduleFolder)),
 			ucfirst($moduleFolder),
-			'[]'
+			$authOption?"['web','auth']":"[]"
 		],$this->getStub('Routes','Route'));
 
 		file_put_contents(app_path('Modules/'.$moduleFolder.'/Routes/'.'web.php'),$routeTemplate);
