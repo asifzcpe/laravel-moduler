@@ -4,15 +4,15 @@ use File;
 use Illuminate\Support\Str;
 trait StubGenerateAble
 {
-	private static $srcFolderName="Modules";
 	
 	public function getStub($type,$stubName)
 	{
 		return file_get_contents(base_path('vendor/asif/laravel-moduler/src/Stubs/'.$type.'/'.$stubName.'.stub'));
 	}
 
-	public function generateController($moduleFolder)
+	public function generateController($moduleFolder,$srcFolder)
 	{
+
 		$controllerTemplate=str_replace([
 			'{ModulerFolder}',
 			'{ControllerName}',
@@ -24,10 +24,10 @@ trait StubGenerateAble
 			Str::singular(ucfirst($moduleFolder)),
 		],$this->getStub('Controllers','Controller'));
 
-		file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Controllers/'.$moduleFolder.'Controller.php',$controllerTemplate);
+		file_put_contents($srcFolder.'/Controllers/'.$moduleFolder.'Controller.php',$controllerTemplate);
 	}
 
-	public function generateRequest($moduleFolder)
+	public function generateRequest($moduleFolder,$srcFolder)
 	{
 		$formRequestTemplate=str_replace([
 			'{ModulerFolder}',
@@ -37,10 +37,10 @@ trait StubGenerateAble
 			Str::singular(ucfirst($moduleFolder))
 		],$this->getStub('Requests','FormRequest'));
 
-		file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Requests/'.$moduleFolder.'Request.php',$formRequestTemplate);
+		file_put_contents($srcFolder.'/Requests/'.$moduleFolder.'Request.php',$formRequestTemplate);
 	}
 
-	public function generateModel($moduleFolder)
+	public function generateModel($moduleFolder,$srcFolder)
 	{
 		$modelTemplate=str_replace([
 			'{ModulerFolder}',
@@ -53,10 +53,10 @@ trait StubGenerateAble
 			strtolower(Str::plural($moduleFolder))
 		],$this->getStub('Models','Model'));
 
-		file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Models/'.Str::singular($moduleFolder).'.php',$modelTemplate);
+		file_put_contents($srcFolder.'/Models/'.Str::singular($moduleFolder).'.php',$modelTemplate);
 	}
 
-	public function generateRoute($moduleFolder,$authOption=false)
+	public function generateRoute($moduleFolder,$authOption=false,$srcFolder)
 	{
 		$routeTemplate=str_replace([
 			'{ModulerFolder}',
@@ -71,10 +71,10 @@ trait StubGenerateAble
 			$authOption?"['web','auth']":"[]"
 		],$this->getStub('Routes','Route'));
 
-		file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Routes/'.'web.php',$routeTemplate);
+		file_put_contents($srcFolder.'/Routes/'.'web.php',$routeTemplate);
 	}
 
-	public function generateMigrationFiles($moduleFolder)
+	public function generateMigrationFiles($moduleFolder,$srcFolder)
 	{
 		$dummyClass=Str::studly('CreateTable'.Str::plural(($moduleFolder)));
 		$tableName=strtolower(Str::plural($moduleFolder));
@@ -89,15 +89,15 @@ trait StubGenerateAble
 		],$this->getStub(null,'Migration'));
 		
 
-		file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Database/Migrations/'.$migrationFileName.'.php',$migrationTemplate);
+		file_put_contents($srcFolder.'/Database/Migrations/'.$migrationFileName.'.php',$migrationTemplate);
 	}
 
-	public function generateViewFiles($moduleFolder)
+	public function generateViewFiles($moduleFolder,$srcFolder)
 	{
 		$viewFiles=['index','create','show','edit'];
 		foreach($viewFiles as $vf)
 		{
-			file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Views/'.$vf.'.blade.php','');
+			file_put_contents($srcFolder.'/Views/'.$vf.'.blade.php','');
 		}
 	}
 }

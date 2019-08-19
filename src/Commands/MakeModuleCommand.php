@@ -17,13 +17,16 @@ class MakeModuleCommand extends Command
     public function handle()
     {
         $moduleName=$this->argument('moduleName');
-        if($this->getModuleType()==='WEB')
+        $moduleType=$this->getModuleType();
+        if($moduleType==='WEB')
         {
+            $this->makeDomainFolderIfNotExists('Modules');
+
             if($this->authenticationOPtions()==='Yes')
             {
                 if(Route::has('login'))
                 {
-                    $this->generateModule($moduleName,true);
+                    $this->generateModule($moduleName,true,"Modules");
                 }
                 else
                 {
@@ -32,18 +35,19 @@ class MakeModuleCommand extends Command
                     {
                         $this->info("enabling auth.....");
                         Artisan::call('make:auth');
-                        $this->generateModule($moduleName,true);
+                        $this->generateModule($moduleName,true,"Modules");
                     }
                 }
             }
             else
             {
-                $this->generateModule($moduleName,false);
+                $this->generateModule($moduleName,false,"Modules");
             }
         }
-        else if($this->getModuleType()=='API')
+        else if($moduleType==='API')
         {
-            $this->info('api');
+            $this->makeDomainFolderIfNotExists('Api/v1');
+            $this->generateModule($moduleName,false,"Api/v1");
         }
     }
 
@@ -62,6 +66,19 @@ class MakeModuleCommand extends Command
     {
         $authenticationType=$this->choice("Do you want to enable authentication for this module",["Yes","No"]);
         return $authenticationType;
+    }
+
+    /**
+     * This method is used to make a modules folder where all business logics and
+     * other things reside.
+     */
+    private function makeDomainFolderIfNotExists($domainType)
+    {
+        
+        if(!file_exists($domainType))
+        {
+            File::makeDirectory($domainType,$mode=0777,true,true);    
+        }
     }
     
 }

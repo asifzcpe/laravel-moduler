@@ -12,7 +12,6 @@ class LaravelModulerServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->makeModulesFolderIfNotExists();
         $this->generateModulerServiceProviderIfNotExists();
     }
 
@@ -23,19 +22,6 @@ class LaravelModulerServiceProvider extends ServiceProvider
             $this->commands([
                 MakeModuleCommand::class,
             ]);
-        }
-    }
-
-    /**
-     * This method is used to make a modules folder where all business logics and
-     * other things reside.
-     */
-    private function makeModulesFolderIfNotExists()
-    {
-        $path='Modules';
-        if(!file_exists($path))
-        {
-            File::makeDirectory($path,$mode=0777,true,true);    
         }
     }
 

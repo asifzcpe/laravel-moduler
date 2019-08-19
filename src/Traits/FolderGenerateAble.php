@@ -15,21 +15,21 @@ trait FolderGenerateAble
         'Routes'
     ];
     private $databaseSubFolders=['Migrations','Factories','Seeds'];
-    private static $srcFolderName='Modules';
-    public function generateModule($moduleName,$authOption=false)
+
+    public function generateModule($moduleName,$authOption=false,$srcFolderName="Modules")
     {
-        $this->moduleName=self::$srcFolderName.'/'.ucfirst($moduleName);
+        $this->moduleName=$srcFolderName.'/'.ucfirst($moduleName);
         if(!file_exists($this->moduleName))
         {
             File::makeDirectory($this->moduleName,$mode=0777,true,true);
             $this->generateModuleFolders($this->moduleName);
             $this->generateModuleSubFolders($this->moduleName,'Database',$this->databaseSubFolders);
-            $this->generateController($moduleName);
-            $this->generateRequest($moduleName);
-            $this->generateModel($moduleName);
-            $this->generateRoute($moduleName,$authOption);
-            $this->generateMigrationFiles($moduleName);
-            $this->generateViewFiles($moduleName);
+            $this->generateController($moduleName,$this->moduleName);
+            $this->generateRequest($moduleName,$this->moduleName);
+            $this->generateModel($moduleName,$this->moduleName);
+            $this->generateRoute($moduleName,$authOption,$this->moduleName);
+            $this->generateMigrationFiles($moduleName,$this->moduleName);
+            $this->generateViewFiles($moduleName,$this->moduleName);
         }
         else
         {
