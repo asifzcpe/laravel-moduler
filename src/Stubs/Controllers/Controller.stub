@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Modules\{ModulerFolder}\Controllers;
+namespace Modules\{ModulerFolder}\Controllers;
 
 use Illuminate\Http\Request;
-use App\Modules\{ModulerFolder}\Requests\{ModulerFolder}Request;
-use App\Modules\{ModulerFolder}\Models\{ModelName};
+use Modules\{ModulerFolder}\Requests\{ModulerFolder}Request;
+use Modules\{ModulerFolder}\Models\{ModelName};
 use App\Http\Controllers\Controller;
 class {ControllerName} extends Controller
 {

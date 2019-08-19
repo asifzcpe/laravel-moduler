@@ -15,9 +15,10 @@ trait FolderGenerateAble
         'Routes'
     ];
     private $databaseSubFolders=['Migrations','Factories','Seeds'];
+    private static $srcFolderName='Modules';
     public function generateModule($moduleName,$authOption=false)
     {
-        $this->moduleName=app_path('Modules/'.ucfirst($moduleName));
+        $this->moduleName=self::$srcFolderName.'/'.ucfirst($moduleName);
         if(!file_exists($this->moduleName))
         {
             File::makeDirectory($this->moduleName,$mode=0777,true,true);

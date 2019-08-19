@@ -14,8 +14,9 @@ class ModuleServiceProvider extends ServiceProvider
     public function boot()
     {
         
-        $moduleFolders=scandir(app_path("Modules"));
+        $moduleFolders=scandir(base_path("Modules"));
         $modules=array_diff($moduleFolders,['.','..']);
+        
         foreach($modules as $module)
         {
             $this->loadModulesViews($module);
@@ -36,7 +37,8 @@ class ModuleServiceProvider extends ServiceProvider
 
     private function loadModulesViews($module)
     {
-        $this->viewsPath=app_path('Modules/'.$module.'/'.'Views');
+        $this->viewsPath=base_path('Modules/'.$module.'/'.'Views');
+        
         if(file_exists($this->viewsPath))
         {
             $this->loadViewsFrom($this->viewsPath,$module);
@@ -45,9 +47,11 @@ class ModuleServiceProvider extends ServiceProvider
 
     private function loadModulesRoutes($module)
     {
-        $this->routesWebPath=app_path('Modules/'.$module.'/Routes/'.'web.php');
+        $this->routesWebPath=base_path('Modules/'.$module.'/Routes/'.'web.php');
+
         
-        $this->routesApiPath=app_path('Modules/'.$module.'/Routes/'.'api.php');
+        $this->routesApiPath=base_path('Modules/'.$module.'/Routes/'.'api.php');
+        
         if(file_exists($this->routesWebPath))
         {
             include $this->routesWebPath;
@@ -60,7 +64,7 @@ class ModuleServiceProvider extends ServiceProvider
 
     private function loadModulesMigrations($module)
     {
-        $this->migrationsPath=app_path('Modules/'.$module.'/'.'Database/Migrations');
+        $this->migrationsPath=base_path('Modules/'.$module.'/'.'Database/Migrations');
         if(file_exists($this->migrationsPath))
         {
             $this->loadMigrationsFrom($this->migrationsPath);

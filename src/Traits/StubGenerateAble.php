@@ -4,6 +4,7 @@ use File;
 use Illuminate\Support\Str;
 trait StubGenerateAble
 {
+	private static $srcFolderName="Modules";
 	
 	public function getStub($type,$stubName)
 	{
@@ -23,7 +24,7 @@ trait StubGenerateAble
 			Str::singular(ucfirst($moduleFolder)),
 		],$this->getStub('Controllers','Controller'));
 
-		file_put_contents(app_path('Modules/'.$moduleFolder.'/Controllers/'.$moduleFolder.'Controller.php'),$controllerTemplate);
+		file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Controllers/'.$moduleFolder.'Controller.php',$controllerTemplate);
 	}
 
 	public function generateRequest($moduleFolder)
@@ -36,7 +37,7 @@ trait StubGenerateAble
 			Str::singular(ucfirst($moduleFolder))
 		],$this->getStub('Requests','FormRequest'));
 
-		file_put_contents(app_path('Modules/'.$moduleFolder.'/Requests/'.$moduleFolder.'Request.php'),$formRequestTemplate);
+		file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Requests/'.$moduleFolder.'Request.php',$formRequestTemplate);
 	}
 
 	public function generateModel($moduleFolder)
@@ -52,7 +53,7 @@ trait StubGenerateAble
 			strtolower(Str::plural($moduleFolder))
 		],$this->getStub('Models','Model'));
 
-		file_put_contents(app_path('Modules/'.$moduleFolder.'/Models/'.Str::singular($moduleFolder).'.php'),$modelTemplate);
+		file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Models/'.Str::singular($moduleFolder).'.php',$modelTemplate);
 	}
 
 	public function generateRoute($moduleFolder,$authOption=false)
@@ -70,7 +71,7 @@ trait StubGenerateAble
 			$authOption?"['web','auth']":"[]"
 		],$this->getStub('Routes','Route'));
 
-		file_put_contents(app_path('Modules/'.$moduleFolder.'/Routes/'.'web.php'),$routeTemplate);
+		file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Routes/'.'web.php',$routeTemplate);
 	}
 
 	public function generateMigrationFiles($moduleFolder)
@@ -86,8 +87,9 @@ trait StubGenerateAble
 			$dummyClass,
 			$tableName
 		],$this->getStub(null,'Migration'));
+		
 
-		file_put_contents(app_path('Modules/'.$moduleFolder.'/Database/Migrations/'.$migrationFileName.'.php'),$migrationTemplate);
+		file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Database/Migrations/'.$migrationFileName.'.php',$migrationTemplate);
 	}
 
 	public function generateViewFiles($moduleFolder)
@@ -95,7 +97,7 @@ trait StubGenerateAble
 		$viewFiles=['index','create','show','edit'];
 		foreach($viewFiles as $vf)
 		{
-			file_put_contents(app_path('Modules/'.$moduleFolder.'/Views/'.$vf.'.blade.php'),'');
+			file_put_contents(self::$srcFolderName.'/'.$moduleFolder.'/Views/'.$vf.'.blade.php','');
 		}
 	}
 }

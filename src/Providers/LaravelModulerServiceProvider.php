@@ -32,7 +32,7 @@ class LaravelModulerServiceProvider extends ServiceProvider
      */
     private function makeModulesFolderIfNotExists()
     {
-        $path=app_path('Modules');
+        $path='Modules';
         if(!file_exists($path))
         {
             File::makeDirectory($path,$mode=0777,true,true);    
