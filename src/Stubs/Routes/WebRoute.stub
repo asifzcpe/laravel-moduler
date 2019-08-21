@@ -1,0 +1,5 @@
+<?php
+
+Route::group(['prefix'=>'{resourceUrl}','namespace'=>'Modules\{ModulerFolder}\Controllers','middleware'=>{auth}],function(){
+    Route::resource('/','{ControllerName}Controller');
+});

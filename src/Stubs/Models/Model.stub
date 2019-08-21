@@ -1,6 +1,6 @@
 <?php
 
-namespace Modules\{ModulerFolder}\Models;
+namespace {SrcFolder}\{ModulerFolder}\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class {modulesModelName} extends Model

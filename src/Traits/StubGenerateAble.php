@@ -15,11 +15,13 @@ trait StubGenerateAble
 
 		$controllerTemplate=str_replace([
 			'{ModulerFolder}',
+			'{SrcFolder}',
 			'{ControllerName}',
 			'{ModelName}'
 		],
 		[
 			$moduleFolder,
+			str_replace('/', '\\', $srcFolder),
 			Str::singular(ucfirst($moduleFolder.'Controller')),
 			Str::singular(ucfirst($moduleFolder)),
 		],$this->getStub('Controllers','Controller'));
@@ -31,10 +33,11 @@ trait StubGenerateAble
 	{
 		$formRequestTemplate=str_replace([
 			'{ModulerFolder}',
+			'{SrcFolder}'
 		],
 		[
 			$moduleFolder,
-			Str::singular(ucfirst($moduleFolder))
+			str_replace('/', '\\', $srcFolder),
 		],$this->getStub('Requests','FormRequest'));
 
 		file_put_contents($srcFolder.'/Requests/'.$moduleFolder.'Request.php',$formRequestTemplate);
@@ -44,11 +47,13 @@ trait StubGenerateAble
 	{
 		$modelTemplate=str_replace([
 			'{ModulerFolder}',
+			'{SrcFolder}',
 			'{modulesModelName}',
 			'{tableName}'
 		],
 		[
 			$moduleFolder,
+			str_replace('/', '\\', $srcFolder),
 			Str::singular(ucfirst($moduleFolder)),
 			strtolower(Str::plural($moduleFolder))
 		],$this->getStub('Models','Model'));
@@ -56,7 +61,7 @@ trait StubGenerateAble
 		file_put_contents($srcFolder.'/Models/'.Str::singular($moduleFolder).'.php',$modelTemplate);
 	}
 
-	public function generateRoute($moduleFolder,$authOption=false,$srcFolder)
+	public function generateWebRoute($moduleFolder,$authOption=false,$srcFolder)
 	{
 		$routeTemplate=str_replace([
 			'{ModulerFolder}',
@@ -69,9 +74,27 @@ trait StubGenerateAble
 			Str::plural(strtolower($moduleFolder)),
 			ucfirst($moduleFolder),
 			$authOption?"['web','auth']":"[]"
-		],$this->getStub('Routes','Route'));
+		],$this->getStub('Routes','WebRoute'));
 
 		file_put_contents($srcFolder.'/Routes/'.'web.php',$routeTemplate);
+	}
+
+	public function generateApiRoute($moduleFolder,$authOption=false,$srcFolder)
+	{
+		$routeTemplate=str_replace([
+			'{ModulerFolder}',
+			'{resourceUrl}',
+			'{ControllerName}',
+			'{auth}'
+		],
+		[
+			$moduleFolder,
+			Str::plural(strtolower($moduleFolder)),
+			ucfirst($moduleFolder),
+			$authOption?"['web','auth']":"[]"
+		],$this->getStub('Routes','ApiRoute'));
+
+		file_put_contents($srcFolder.'/Routes/'.'api.php',$routeTemplate);
 	}
 
 	public function generateMigrationFiles($moduleFolder,$srcFolder)

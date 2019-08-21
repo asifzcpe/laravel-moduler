@@ -11,7 +11,6 @@ trait FolderGenerateAble
         'Models',
         'Database',
         'Requests',
-        'Views',
         'Routes'
     ];
     private $databaseSubFolders=['Migrations','Factories','Seeds'];
@@ -19,17 +18,29 @@ trait FolderGenerateAble
     public function generateModule($moduleName,$authOption=false,$srcFolderName="Modules")
     {
         $this->moduleName=$srcFolderName.'/'.ucfirst($moduleName);
+
         if(!file_exists($this->moduleName))
         {
             File::makeDirectory($this->moduleName,$mode=0777,true,true);
-            $this->generateModuleFolders($this->moduleName);
+            if($srcFolderName==='Modules')
+            {
+                array_push($this->moduleFolders,"Views");
+            }
+            $this->generateModuleFolders($this->moduleName,$this->moduleFolders);
             $this->generateModuleSubFolders($this->moduleName,'Database',$this->databaseSubFolders);
             $this->generateController($moduleName,$this->moduleName);
             $this->generateRequest($moduleName,$this->moduleName);
             $this->generateModel($moduleName,$this->moduleName);
-            $this->generateRoute($moduleName,$authOption,$this->moduleName);
             $this->generateMigrationFiles($moduleName,$this->moduleName);
-            $this->generateViewFiles($moduleName,$this->moduleName);
+            if($srcFolderName==="Modules")
+            {
+                $this->generateViewFiles($moduleName,$this->moduleName);
+                $this->generateWebRoute($moduleName,$authOption,$this->moduleName);
+            }
+            else
+            {
+                $this->generateApiRoute($moduleName,$authOption,$this->moduleName);
+            }
         }
         else
         {
@@ -37,9 +48,9 @@ trait FolderGenerateAble
         }
     }
 
-    private function generateModuleFolders($moduleName)
+    private function generateModuleFolders($moduleName,$folders)
     {
-        foreach($this->moduleFolders as $moduleFolder)
+        foreach($folders as $moduleFolder)
         {
                 $folder=$moduleName.'/'.$moduleFolder;
                 if(!file_exists($folder))
