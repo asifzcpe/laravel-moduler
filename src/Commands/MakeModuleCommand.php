@@ -43,11 +43,14 @@ class MakeModuleCommand extends Command
             {
                 $this->generateModule($moduleName,false,"Modules");
             }
+
+            $this->generateModulerServiceProviderIfNotExists();
         }
         else if($moduleType==='API')
         {
             $this->makeDomainFolderIfNotExists('Api/v1');
             $this->generateModule($moduleName,false,"Api/v1");
+            $this->generateApiServiceProviderIfNotExists();
         }
     }
 
@@ -78,6 +81,30 @@ class MakeModuleCommand extends Command
         if(!file_exists($domainType))
         {
             File::makeDirectory($domainType,$mode=0777,true,true);    
+        }
+    }
+
+    /**
+     * This method is used to generate module service provider
+     */
+    private function generateModulerServiceProviderIfNotExists()
+    {
+        $path=app_path('Providers/ModuleServiceProvider.php');
+        if(!file_exists($path))
+        {
+            file_put_contents($path,file_get_contents(base_path('vendor/asif/laravel-moduler/src/Stubs/ModuleServiceProvider.stub')));  
+        }
+    }
+
+    /**
+     * This method is used to generate api service provider
+     */
+    private function generateApiServiceProviderIfNotExists()
+    {
+        $path=app_path('Providers/ApiServiceProvider.php');
+        if(!file_exists($path))
+        {
+            file_put_contents($path,file_get_contents(base_path('vendor/asif/laravel-moduler/src/Stubs/ApiServiceProvider.stub')));  
         }
     }
     
