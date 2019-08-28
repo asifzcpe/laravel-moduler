@@ -39,7 +39,7 @@ trait FolderGenerateAble
             }
             else
             {
-                $this->generateApiRoute($moduleName,$authOption,$this->moduleName);
+                $this->generateApiRoute($moduleName,$authOption,$srcFolderName);
             }
         }
         else

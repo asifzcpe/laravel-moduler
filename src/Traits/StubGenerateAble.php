@@ -12,6 +12,14 @@ trait StubGenerateAble
 
 	public function generateController($moduleFolder,$srcFolder)
 	{
+		if($srcFolder=="Modules")
+		{
+			$controllerStub=$this->getStub('Controllers','Controller');
+		}
+		else
+		{
+			$controllerStub=$this->getStub('Controllers','ApiController');
+		}
 
 		$controllerTemplate=str_replace([
 			'{ModulerFolder}',
@@ -24,10 +32,12 @@ trait StubGenerateAble
 			str_replace('/', '\\', $srcFolder),
 			Str::singular(ucfirst($moduleFolder.'Controller')),
 			Str::singular(ucfirst($moduleFolder)),
-		],$this->getStub('Controllers','Controller'));
+		],$controllerStub);
 
 		file_put_contents($srcFolder.'/Controllers/'.$moduleFolder.'Controller.php',$controllerTemplate);
 	}
+
+
 
 	public function generateRequest($moduleFolder,$srcFolder)
 	{
@@ -85,16 +95,20 @@ trait StubGenerateAble
 			'{ModulerFolder}',
 			'{resourceUrl}',
 			'{ControllerName}',
-			'{auth}'
+			'{auth}',
+			'{srcFolder}',
+			'{namespace}'
 		],
 		[
 			$moduleFolder,
 			Str::plural(strtolower($moduleFolder)),
 			ucfirst($moduleFolder),
-			$authOption?"['web','auth']":"[]"
+			$authOption?"['web','auth']":"[]",
+			strtolower($srcFolder),
+			str_replace('/', '\\', $srcFolder),
 		],$this->getStub('Routes','ApiRoute'));
 
-		file_put_contents($srcFolder.'/Routes/'.'api.php',$routeTemplate);
+		file_put_contents($srcFolder.'/'.$moduleFolder.'/Routes/'.'api.php',$routeTemplate);
 	}
 
 	public function generateMigrationFiles($moduleFolder,$srcFolder)
