@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use {SrcFolder}\Requests\{ModulerFolder}Request;
 use {SrcFolder}\Models\{ModelName};
 use App\Http\Controllers\Controller;
+use Response;
+use Illuminate\Http\Response as Res;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 class {ControllerName} extends Controller
 {
     /**
@@ -15,8 +18,8 @@ class {ControllerName} extends Controller
      */
     public function index()
     {
-        $data['{ModelName}']={ModelName}::all();
-        return view('{ModelName}::index',$data);
+        $data={ModelName}::all();
+        return Response::json($data,Res::HTTP_OK);
     }
 
     /**
@@ -26,8 +29,7 @@ class {ControllerName} extends Controller
      */
     public function create()
     {
-        $data=[];
-        return view('{ModelName}::create',$data);
+        
     }
 
     /**
@@ -38,7 +40,10 @@ class {ControllerName} extends Controller
      */
     public function store({ModulerFolder}Request $request)
     {
-        
+        ${ModelName}= new {ModelName}();
+        $data=$request->only(${ModelName}->getFillable());
+        ${ModelName}->fill($data)->save();
+        return Response::json($data,Res::HTTP_CREATED);
     }
 
     /**
@@ -49,8 +54,16 @@ class {ControllerName} extends Controller
      */
     public function show($id)
     {
-        $data['{ModelName}']={ModelName}::find($id);
-        return view('{ModelName}::show',$data);
+        try
+        {
+            $data={ModelName}::findOrFail($id);
+            return Response::json($data,Res::HTTP_OK);
+
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return Response::json('Sorry the data is not found',Res::HTTP_NOT_FOUND);
+        }
     }
 
     /**
@@ -61,8 +74,16 @@ class {ControllerName} extends Controller
      */
     public function edit($id)
     {
-        $data['{ModelName}']={ModelName}::find($id);
-        return view('{ModelName}::edit',$data);
+        try
+        {
+            $data={ModelName}::findOrFail($id);
+            return Response::json($data,Res::HTTP_OK);
+
+        }
+        catch(ModelNotFoundException $e)
+        {
+            return Response::json('Sorry the data is not found',Res::HTTP_NOT_FOUND);
+        }
     }
 
     /**
@@ -89,3 +110,11 @@ class {ControllerName} extends Controller
         ${ModelName}->delete();
     }
 }
+
+/**A successful DELETE, with no further information. 204 No Content
+
+A successful DELETE, but you have a warning about related orphan resources that should be deleted too. 200 OK.
+
+You accepted the DELETE request, but it might take a long time and you're going to do it asynchronously. The client should check it later. 202 Accepted.
+
+You accepted the DELETE request, but the resource can't be removed and the URI is instead reset to a default. 205 Reset Content.**/

@@ -14,6 +14,7 @@ class MakeModuleCommand extends Command
 
     protected $description="This command is used to generate module";
 
+    
     public function handle()
     {
         $moduleName=$this->argument('moduleName');
