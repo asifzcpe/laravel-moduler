@@ -1,12 +1,12 @@
 <?php
 
-namespace {SrcFolder}\Models;
+namespace {ModulePath}\Models;
 use Illuminate\Database\Eloquent\Model;
 
-class {modulesModelName} extends Model
+class {ModuleNameSingular} extends Model
 {
-    protected $table='{tableName}';
-    protected $guarded=[];
+    protected $table = '{TableName}';
+    protected $fillable = [];
 
     public static function boot()
     {
