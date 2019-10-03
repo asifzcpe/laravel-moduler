@@ -36,7 +36,7 @@ trait StubGenerateAble
 				$moduleNameSingular,
 				Str::singular(strtolower($moduleFolder)),
 				Str::plural(strtolower($moduleFolder)),
-				Str::kebab(Str::plural($moduleName))
+				Str::kebab(Str::plural($moduleFolder))
 			],
 			$controllerStub
 		);
