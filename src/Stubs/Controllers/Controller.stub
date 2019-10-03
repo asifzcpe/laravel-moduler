@@ -1,13 +1,26 @@
 <?php
 
-namespace {SrcFolder}\Controllers;
+namespace {ModulePath}\Controllers;
 
 use Illuminate\Http\Request;
-use {SrcFolder}\Requests\{ModulerFolder}Request;
-use {SrcFolder}\Models\{ModelName};
+use Response;
+use {ModulePath}\Requests\{ModuleNameSingular}Request;
+use {ModulePath}\Models\{ModuleNameSingular};
 use App\Http\Controllers\Controller;
-class {ControllerName} extends Controller
+use Session;
+
+class {ModuleNameSingular}Controller extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        //
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +28,9 @@ class {ControllerName} extends Controller
      */
     public function index()
     {
-        $data['{ModelName}']={ModelName}::all();
-        return view('{ModelName}::index',$data);
+        $data = [];
+        $data['{ModuleVariablePlural}'] = {ModuleNameSingular}::all();
+        return view('{ModuleName}::index',$data);
     }
 
     /**
@@ -26,8 +40,8 @@ class {ControllerName} extends Controller
      */
     public function create()
     {
-        $data=[];
-        return view('{ModelName}::create',$data);
+        $data = [];
+        return view('{ModuleName}::create',$data);
     }
 
     /**
@@ -36,9 +50,13 @@ class {ControllerName} extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store({ModulerFolder}Request $request)
+    public function store({ModuleNameSingular}Request $request)
     {
-        
+        ${ModuleVariableSingular} = new {ModuleNameSingular}();
+        $data = $request->only(${ModuleVariableSingular}->getFillable());
+        ${ModuleVariableSingular}->fill($data)->save();
+        Session::flash('successMessage','Created Successfully');
+        return Response::redirectToRoute('{ModuleRoute}.index');
     }
 
     /**
@@ -49,8 +67,8 @@ class {ControllerName} extends Controller
      */
     public function show($id)
     {
-        $data['{ModelName}']={ModelName}::find($id);
-        return view('{ModelName}::show',$data);
+        $data['{ModuleVariableSingular}']={ModuleNameSingular}::find($id);
+        return view('{ModuleName}::show',$data);
     }
 
     /**
@@ -61,8 +79,9 @@ class {ControllerName} extends Controller
      */
     public function edit($id)
     {
-        $data['{ModelName}']={ModelName}::find($id);
-        return view('{ModelName}::edit',$data);
+        $data = [];
+        $data['{ModuleVariableSingular}'] = {ModuleNameSingular}::find($id);
+        return view('{ModuleName}::edit',$data);
     }
 
     /**
@@ -72,9 +91,13 @@ class {ControllerName} extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update({ModulerFolder}Request $request, $id)
+    public function update({ModuleNameSingular}Request $request, $id)
     {
-        
+        ${ModuleVariableSingular} = {ModuleNameSingular}::findOrFail($id);
+        $data = $request->only(${ModuleVariableSingular}->getFillable());
+        ${ModuleVariableSingular}->update($data);
+        Session::flash('successMessage','Updated Successfully');
+        return Response::redirectToRoute('{ModuleRoute}.index');
     }
 
     /**
@@ -85,7 +108,9 @@ class {ControllerName} extends Controller
      */
     public function destroy($id)
     {
-        ${ModelName}={ModelName}::find($id);
-        ${ModelName}->delete();
+        ${ModuleVariableSingular} = {ModuleNameSingular}::find($id);
+        ${ModuleVariableSingular}->delete();
+        Session::flash('successMessage','Deleted Successfully');
+        return Response::redirectToRoute('{ModuleRoute}.index');
     }
 }

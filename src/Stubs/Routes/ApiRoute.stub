@@ -1,5 +1,5 @@
 <?php
 
-Route::group(['prefix'=>'{srcFolder}/{resourceUrl}','namespace'=>'{namespace}\{ModulerFolder}\Controllers','middleware'=>{auth}],function(){
-    Route::resource('/','{ControllerName}Controller');
+Route::group(['prefix'=>'{srcFolder}/','namespace'=>'{namespace}\{ModuleName}\Controllers','middleware'=>{auth}],function(){
+    Route::resource('{Url}','{ModuleNameSingular}Controller');
 });
