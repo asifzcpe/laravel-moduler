@@ -13,14 +13,14 @@ trait StubGenerateAble
 		return file_get_contents(base_path('vendor/asif/laravel-moduler/src/Stubs/' . $type . '/' . $stubName . '.stub'));
 	}
 
-	public function generateController($moduleFolder, $modulePath, $srcFolder)
+	public function generateController($moduleName, $modulePath, $srcFolder)
 	{
 		if ($srcFolder == "Modules") {
 			$controllerStub = $this->getStub('Controllers', 'Controller');
 		} else {
 			$controllerStub = $this->getStub('Controllers', 'ApiController');
 		}
-		$moduleNameSingular = Str::singular(ucfirst($moduleFolder));
+		$moduleNameSingular = Str::singular(ucfirst($moduleName));
 		$controllerTemplate = str_replace(
 			[
 				'{ModuleName}',
@@ -34,9 +34,9 @@ trait StubGenerateAble
 				$moduleFolder,
 				str_replace('/', '\\', $modulePath),
 				$moduleNameSingular,
-				Str::singular(strtolower($moduleFolder)),
-				Str::plural(strtolower($moduleFolder)),
-				Str::kebab(Str::plural($moduleFolder))
+				Str::singular(strtolower($moduleName)),
+				Str::plural(strtolower($moduleName)),
+				Str::kebab(Str::plural($moduleName))
 			],
 			$controllerStub
 		);
