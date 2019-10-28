@@ -22,7 +22,7 @@ trait StubGenerateAble
 		}
 		$moduleNameSingular = Str::singular(ucfirst($moduleFolder));
 		$controllerTemplate = str_replace(
-			[
+			[ 
 				'{ModuleName}',
 				'{ModulePath}',
 				'{ModuleNameSingular}',
@@ -157,5 +157,27 @@ trait StubGenerateAble
 		foreach ($viewFiles as $vf) {
 			file_put_contents($modulePath . '/Views/' . $vf . '.blade.php', '');
 		}
+	}
+
+	/**
+	 * 
+	 */
+	public function generateExtraController($controllerName, $modulePath)
+	{
+		$controllerStub = $this->getStub('Controllers', 'ExtraController');
+		$extraControllerName = Str::singular(ucfirst($controllerName));
+		$controllerTemplate = str_replace(
+			[ 
+				'{ModulePath}',
+				'{ExtraControllerName}',
+			],
+			[
+				str_replace('/', '\\', $modulePath),
+				$extraControllerName,
+			],
+			$controllerStub
+		);
+
+		file_put_contents($modulePath . '/Controllers/' . $extraControllerName . '.php', $controllerTemplate);
 	}
 }

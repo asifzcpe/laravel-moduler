@@ -3,6 +3,7 @@ namespace Asif\LaravelModuler\Providers;
 use Illuminate\Support\ServiceProvider;
 use Asif\LaravelModuler\Commands\MakeModuleCommand;
 use Asif\LaravelModuler\Commands\GenerateExtraFileCommand;
+use Asif\LaravelModuler\Commands\GenerateControllerCommand;
 
 use File;
 class LaravelModulerServiceProvider extends ServiceProvider
@@ -24,6 +25,7 @@ class LaravelModulerServiceProvider extends ServiceProvider
             $this->commands([
                 MakeModuleCommand::class,
                 GenerateExtraFileCommand::class,
+                GenerateControllerCommand::class,
             ]);
         }
     }
