@@ -4,8 +4,8 @@ use Illuminate\Support\ServiceProvider;
 use Asif\LaravelModuler\Commands\MakeModuleCommand;
 use Asif\LaravelModuler\Commands\GenerateExtraFileCommand;
 use Asif\LaravelModuler\Commands\GenerateControllerCommand;
+use Asif\LaravelModuler\Commands\GenerateExtraModelCommand;
 
-use File;
 class LaravelModulerServiceProvider extends ServiceProvider
 {
     public function boot()
@@ -26,6 +26,8 @@ class LaravelModulerServiceProvider extends ServiceProvider
                 MakeModuleCommand::class,
                 GenerateExtraFileCommand::class,
                 GenerateControllerCommand::class,
+                GenerateExtraModelCommand::class,
+
             ]);
         }
     }
@@ -35,7 +37,7 @@ class LaravelModulerServiceProvider extends ServiceProvider
         $path=app_path('Providers/ModuleServiceProvider.php');
         if(!file_exists($path))
         {
-            file_put_contents($path,file_get_contents(base_path('vendor/asif/laravel-moduler/src/Stubs/ModuleServiceProvider.stub')));  
+            file_put_contents($path,file_get_contents(base_path('vendor/asif/laravel-moduler/src/Stubs/ModuleServiceProvider.stub')));
         }
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Asif\LaravelModuler\Traits;
 
-use File;
 use Illuminate\Support\Str;
 
 trait StubGenerateAble
@@ -22,7 +21,7 @@ trait StubGenerateAble
 		}
 		$moduleNameSingular = Str::singular(ucfirst($moduleFolder));
 		$controllerTemplate = str_replace(
-			[ 
+			[
 				'{ModuleName}',
 				'{ModulePath}',
 				'{ModuleNameSingular}',
@@ -160,14 +159,14 @@ trait StubGenerateAble
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public function generateExtraController($controllerName, $modulePath)
 	{
 		$controllerStub = $this->getStub('Controllers', 'ExtraController');
 		$extraControllerName = Str::singular(ucfirst($controllerName));
 		$controllerTemplate = str_replace(
-			[ 
+			[
 				'{ModulePath}',
 				'{ExtraControllerName}',
 			],
@@ -179,5 +178,25 @@ trait StubGenerateAble
 		);
 
 		file_put_contents($modulePath . '/Controllers/' . $extraControllerName . '.php', $controllerTemplate);
+    }
+
+    public function generateExtraModel($modelName, $modulePath)
+	{
+        $moduleNameSingular = Str::singular(ucfirst($modelName));
+		$modelTemplate = str_replace(
+			[
+				'{ModulePath}',
+				'{ModuleNameSingular}',
+				'{TableName}'
+			],
+			[
+				str_replace('/', '\\', $modulePath),
+				$moduleNameSingular,
+				Str::snake(Str::plural($modelName))
+			],
+			$this->getStub('Models', 'Model')
+		);
+
+		file_put_contents($modulePath . '/Models/' . $moduleNameSingular . '.php', $modelTemplate);
 	}
 }

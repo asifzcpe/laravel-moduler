@@ -1,5 +1,8 @@
 <?php
 
-Route::group(['prefix'=>'{srcFolder}/','namespace'=>'{namespace}\{ModuleName}\Controllers','middleware'=>{auth}],function(){
+Route::prefix('{srcFolder}/')
+->namespace('{namespace}\{ModuleName}\Controllers')
+->middleware({auth})
+->group(function () {
     Route::resource('{Url}','{ModuleNameSingular}Controller');
 });

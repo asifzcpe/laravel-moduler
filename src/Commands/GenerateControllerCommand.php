@@ -5,8 +5,7 @@ namespace Asif\LaravelModuler\Commands;
 use Illuminate\Console\Command;
 use Asif\LaravelModuler\Traits\FolderGenerateAble;
 use Asif\LaravelModuler\Traits\StubGenerateAble;
-use File;
-use Artisan;
+
 
 class GenerateControllerCommand extends Command
 {

@@ -9,7 +9,7 @@ use Artisan;
 
 class GenerateExtraFileCommand extends Command
 {
-    
+    use StubGenerateAble;
     private $fileTypes=[
         'Controllers',
         'Models',
@@ -33,10 +33,12 @@ class GenerateExtraFileCommand extends Command
         $this->fileName=$this->ask("Please,enter file name ");
         switch ($this->selectedFileType) {
             case 'Controllers':
-                Artisan::call('make:controller', [
-                    'name'=>"..\\..\\..\\Api\\v1\\".$this->selectedModule."\\Controllers\\".$this->fileName,
-                    '--resource'=>'--resource'
-                ]);
+                // Artisan::call('make:controller', [
+                //     'name'=>"\\Api\\v1\\".$this->selectedModule."\\Controllers\\".$this->fileName,
+                //     '--resource'=>'--resource'
+                // ]);
+
+                $this->generateExtraController($this->fileName, $this->modules.$this->selectedModule."/Controllers/".$this->fileName);
                 break;
 
             case 'Models':
