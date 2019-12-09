@@ -199,4 +199,77 @@ trait StubGenerateAble
 
 		file_put_contents($modulePath . '/Models/' . $moduleNameSingular . '.php', $modelTemplate);
 	}
+
+	public function insertResourceRouteInModuleRoutes($file,$newRoute)
+	{
+		$this->removeEmptyLines($file) ;
+		$fc = fopen($file, "r");
+		while (!feof($fc)) {
+		    $buffer = fgets($fc, 4096);
+		    if($buffer!=""){
+		    	$lines[] = $buffer;
+		    }
+		}
+
+		fclose($fc);
+
+		//open same file and use "w" to clear file 
+		$f = fopen($file, "w") or die("couldn't open $file");
+
+		$lineCount = count($lines);
+		//loop through array writing the lines until the secondlast
+
+		for ($i = 0; $i < $lineCount-1; $i++) {
+				fwrite($f, $lines[$i]);
+		}
+
+		fwrite($f, $newRoute.PHP_EOL);
+
+		//write the last line
+		fwrite($f, $lines[$lineCount-1]);
+		fclose($f);
+	}
+
+	public function removeEmptyLines($fullPath)
+	{
+		$tempFile_ar = array(); 
+
+        $fileContent = @file($fullPath); 
+        if (!$fileContent) return false; 
+
+
+        $countLines = 0; 
+        foreach ($fileContent as $key => $value) 
+        { 
+            if (trim($value) != '') { 
+                $tempFile_ar[] = $value; 
+                $countLines++; 
+            } 
+        } 
+
+
+        $new = ''; 
+        $i = 0; 
+        foreach ($tempFile_ar as $k=>$line) 
+        { 
+            $i++; 
+
+            if ($i != $countLines) { 
+                $line = str_replace("\r", "", $line); 
+                $line = str_replace("\n", "", $line); 
+                if (!empty($line)) $new .= $line . "\n"; 
+            } 
+            else { 
+                $line = str_replace("\r", "", $line); 
+                $line = str_replace("\n", "", $line); 
+                if (!empty($line)) $new .= $line; 
+            } 
+        } 
+        $fp = fopen ($fullPath, 'w'); 
+        fputs($fp, $new); 
+        fclose($fp); 
+
+        return true; 
+	}
+
 }

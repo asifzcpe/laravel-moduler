@@ -31,6 +31,7 @@ class GenerateExtraFileCommand extends Command
         $this->modules=scandir(base_path('Api/v1/'));
         $this->selectedModule=$this->choice('Select the module', array_values(array_diff($this->modules, ['.','..'])));
         $this->fileName=$this->ask("Please,enter file name ");
+        
         switch ($this->selectedFileType) {
             case 'Controllers':
                 // Artisan::call('make:controller', [
@@ -38,7 +39,8 @@ class GenerateExtraFileCommand extends Command
                 //     '--resource'=>'--resource'
                 // ]);
 
-                $this->generateExtraController($this->fileName, $this->modules.$this->selectedModule."/Controllers/".$this->fileName);
+                $this->generateExtraController($this->fileName, 'Api/v1/'.$this->selectedModule);
+                $this->insertResourceRouteInModuleRoutes('Api/v1/'.$this->selectedModule.'/Routes/api.php',"What the fuck");
                 break;
 
             case 'Models':
