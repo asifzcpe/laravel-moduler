@@ -213,7 +213,7 @@ trait StubGenerateAble
 
 		fclose($fc);
 
-		//open same file and use "w" to clear file 
+		//open same file and use "w" to clear file
 		$f = fopen($file, "w") or die("couldn't open $file");
 
 		$lineCount = count($lines);
@@ -223,7 +223,7 @@ trait StubGenerateAble
 				fwrite($f, $lines[$i]);
 		}
 
-		fwrite($f, $newRoute.PHP_EOL);
+		fwrite($f, "\t".$newRoute.PHP_EOL);
 
 		//write the last line
 		fwrite($f, $lines[$lineCount-1]);
@@ -232,44 +232,44 @@ trait StubGenerateAble
 
 	public function removeEmptyLines($fullPath)
 	{
-		$tempFile_ar = array(); 
+		$tempFile_ar = array();
 
-        $fileContent = @file($fullPath); 
-        if (!$fileContent) return false; 
-
-
-        $countLines = 0; 
-        foreach ($fileContent as $key => $value) 
-        { 
-            if (trim($value) != '') { 
-                $tempFile_ar[] = $value; 
-                $countLines++; 
-            } 
-        } 
+        $fileContent = @file($fullPath);
+        if (!$fileContent) return false;
 
 
-        $new = ''; 
-        $i = 0; 
-        foreach ($tempFile_ar as $k=>$line) 
-        { 
-            $i++; 
+        $countLines = 0;
+        foreach ($fileContent as $key => $value)
+        {
+            if (trim($value) != '') {
+                $tempFile_ar[] = $value;
+                $countLines++;
+            }
+        }
 
-            if ($i != $countLines) { 
-                $line = str_replace("\r", "", $line); 
-                $line = str_replace("\n", "", $line); 
-                if (!empty($line)) $new .= $line . "\n"; 
-            } 
-            else { 
-                $line = str_replace("\r", "", $line); 
-                $line = str_replace("\n", "", $line); 
-                if (!empty($line)) $new .= $line; 
-            } 
-        } 
-        $fp = fopen ($fullPath, 'w'); 
-        fputs($fp, $new); 
-        fclose($fp); 
 
-        return true; 
+        $new = '';
+        $i = 0;
+        foreach ($tempFile_ar as $k=>$line)
+        {
+            $i++;
+
+            if ($i != $countLines) {
+                $line = str_replace("\r", "", $line);
+                $line = str_replace("\n", "", $line);
+                if (!empty($line)) $new .= $line . "\n";
+            }
+            else {
+                $line = str_replace("\r", "", $line);
+                $line = str_replace("\n", "", $line);
+                if (!empty($line)) $new .= $line;
+            }
+        }
+        $fp = fopen ($fullPath, 'w');
+        fputs($fp, $new);
+        fclose($fp);
+
+        return true;
 	}
 
 }

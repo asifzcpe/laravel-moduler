@@ -6,6 +6,7 @@ use Asif\LaravelModuler\Traits\FolderGenerateAble;
 use Asif\LaravelModuler\Traits\StubGenerateAble;
 use File;
 use Artisan;
+use Str;
 
 class GenerateExtraFileCommand extends Command
 {
@@ -31,16 +32,16 @@ class GenerateExtraFileCommand extends Command
         $this->modules=scandir(base_path('Api/v1/'));
         $this->selectedModule=$this->choice('Select the module', array_values(array_diff($this->modules, ['.','..'])));
         $this->fileName=$this->ask("Please,enter file name ");
-        
+
         switch ($this->selectedFileType) {
             case 'Controllers':
-                // Artisan::call('make:controller', [
-                //     'name'=>"\\Api\\v1\\".$this->selectedModule."\\Controllers\\".$this->fileName,
-                //     '--resource'=>'--resource'
-                // ]);
+                $resourceName=Str::plural($this->fileName);
+                $controllerName=$this->fileName.'Controller';
+                $newRoute="Route::resource('".strtolower($resourceName)."','".$controllerName."');";
 
-                $this->generateExtraController($this->fileName, 'Api/v1/'.$this->selectedModule);
-                $this->insertResourceRouteInModuleRoutes('Api/v1/'.$this->selectedModule.'/Routes/api.php',"What the fuck");
+                $this->generateExtraController($controllerName, 'Api/v1/'.$this->selectedModule);
+
+                $this->insertResourceRouteInModuleRoutes('Api/v1/'.$this->selectedModule.'/Routes/api.php',$newRoute);
                 break;
 
             case 'Models':
