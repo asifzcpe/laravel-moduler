@@ -1,6 +1,6 @@
 {
     "name": "asif/laravel-moduler",
-    "version":"1.2.1"",
+    "version":"1.2.1",
     "description": "This package is used to generate modules for laravel app and api too",
     "type": "library",
     "license": "MIT",
